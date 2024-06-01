@@ -6,10 +6,16 @@ const taskRouter = require('./routes/taskRoute');
 const app = express();
 
 app.use(express.json());
-app.use(cors({
+
+// CORS configuration
+const corsOptions = {
     origin: 'https://todo-client-jet.vercel.app',
-    credentials: true
-}));
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
 
 
 app.use('/api/user', userRouter);
