@@ -38,10 +38,10 @@ const loginUser = async (req, res) => {
         const response = await bcrypt.compare(password, user.password);
         hashPass = user.password;
         if(!response) {
-            res.status(403).json({msg: 'wrong password'});
+            return res.status(403).json({msg: 'wrong password'});
         }
     } catch (error) {
-        res.json({msg: "error comparing"});
+        return res.json({msg: "error comparing"});
     }
 
     try {
@@ -56,10 +56,10 @@ const loginUser = async (req, res) => {
             }, config.jwtSecret, {
                 expiresIn: '7d'
             });
-            res.status(200).json(token);
+            return res.status(200).json(token);
         }
     } catch (error) {
-        res.status(404).json({msg: 'user not found'});
+        return res.status(404).json({msg: 'user not found'});
     }
 }
 
@@ -71,11 +71,11 @@ const deleteUser = async (req, res) => {
         if(id==reqId) {
             const response = await User.findByIdAndDelete(id);
             if(response) {
-                res.status(200).json({msg: 'deleted successfully'});
+                return res.status(200).json({msg: 'deleted successfully'});
             }
         }
     } catch (error) {
-        res.json({msg: 'error deleting user'});
+        return res.json({msg: 'error deleting user'});
     }
 }
 
